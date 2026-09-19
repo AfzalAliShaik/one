@@ -1,416 +1,699 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NexusShop · Simple & Modern</title>
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    /* ---------- GLOBAL RESET / SIMPLICITY ---------- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>NexusShop — Modern E‑Commerce</title>
 
-    body {
-      background: #f7f8fa;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      color: #1e1e2a;
-      line-height: 1.4;
-      padding: 2rem 1.5rem;
-    }
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
 
-    /* ---------- TYPOGRAPHY & COLOR ---------- */
-    h1, h2, h3 {
-      font-weight: 600;
-      letter-spacing: -0.02em;
-    }
+    <style>
+        /* ========== ROOT VARIABLES ========== */
+        :root {
+            --bg: #fafaf8;
+            --bg-card: #ffffff;
+            --primary: #1a1a2e;
+            --primary-light: #2d2d44;
+            --accent: #e94560;
+            --accent-hover: #d63851;
+            --text: #1a1a2e;
+            --text-muted: #6b7280;
+            --border: #e8e8ed;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 12px 32px rgba(0,0,0,0.10);
+            --radius: 14px;
+            --radius-sm: 8px;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
 
-    h1 {
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: #0b0b1a;
-      margin-bottom: 0.25rem;
-    }
+        /* ========== RESET ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    .subhead {
-      font-size: 1rem;
-      color: #5b5b6b;
-      margin-bottom: 2.5rem;
-      font-weight: 400;
-      border-left: 4px solid #0b0b1a;
-      padding-left: 1rem;
-    }
+        html { scroll-behavior: smooth; }
 
-    /* ---------- SIMPLE LAYOUT ---------- */
-    .shop-container {
-      max-width: 1280px;
-      margin: 0 auto;
-    }
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
 
-    /* header area — minimal */
-    .simple-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
+        a { text-decoration: none; color: inherit; }
+        button { font-family: inherit; cursor: pointer; border: none; background: none; }
+        input { font-family: inherit; }
+        img { max-width: 100%; display: block; }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
+        /* ========== CONTAINER ========== */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
 
-    .brand i {
-      font-size: 2rem;
-      color: #0b0b1a;
-    }
+        /* ========== HEADER ========== */
+        .site-header {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    .brand span {
-      font-size: 1.6rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      color: #0b0b1a;
-    }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            height: 72px;
+        }
 
-    .simple-actions {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.35rem;
+            letter-spacing: -0.03em;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
 
-    .icon-btn {
-      background: transparent;
-      border: none;
-      font-size: 1.3rem;
-      color: #2d2d44;
-      cursor: default; /* just visual, no interaction required */
-      padding: 0.3rem;
-    }
+        .brand i {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
 
-    /* ---------- ALL ITEMS ON FRONT PAGE — GRID ---------- */
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1.75rem;
-      margin: 2rem 0 1rem;
-    }
+        .search-bar {
+            flex: 1;
+            max-width: 480px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f3f4f6;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 0 18px;
+            height: 42px;
+            transition: all 0.2s;
+        }
 
-    /* clean card */
-    .product-card {
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 1.25rem 1rem 1.5rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-      transition: all 0.15s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      border: 1px solid #ececf0;
-    }
+        .search-bar:focus-within {
+            border-color: var(--accent);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(233,69,96,0.08);
+        }
 
-    .product-card:hover {
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.04);
-      border-color: #d0d0dd;
-      transform: translateY(-3px);
-    }
+        .search-bar i {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
 
-    /* product visual placeholder — minimal shapes */
-    .product-visual {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      background: #f2f3f7;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.8rem;
-      color: #2d2d44;
-      margin-bottom: 1rem;
-      transition: background 0.2s;
-    }
+        .search-bar input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
 
-    .product-card:hover .product-visual {
-      background: #e9eaf0;
-    }
+        .search-bar input::placeholder {
+            color: var(--text-muted);
+        }
 
-    .product-name {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-      color: #0b0b1a;
-      letter-spacing: -0.01em;
-    }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-shrink: 0;
+        }
 
-    .product-price {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #0b0b1a;
-      background: #f2f3f7;
-      padding: 0.3rem 0.9rem;
-      border-radius: 40px;
-      display: inline-block;
-      margin: 0.5rem 0 0.2rem;
-    }
+        .icon-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
 
-    /* tiny meta detail — rating / category (optional) */
-    .product-meta {
-      font-size: 0.8rem;
-      color: #77778a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      margin-bottom: 0.75rem;
-    }
+        .icon-link:hover { color: var(--accent); }
 
-    .product-meta i {
-      font-size: 0.7rem;
-      color: #f5b342;
-    }
+        .cart-link { position: relative; }
 
-    /* minimal "add" button — only visual, no action */
-    .add-simple {
-      margin-top: 0.8rem;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: #1e1e2a;
-      background: transparent;
-      border: 1.5px solid #d0d0dd;
-      border-radius: 40px;
-      padding: 0.5rem 1.2rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      cursor: default;
-      transition: 0.1s;
-    }
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 700;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 5px;
+        }
 
-    .product-card:hover .add-simple {
-      background: #0b0b1a;
-      color: #ffffff;
-      border-color: #0b0b1a;
-    }
+        /* ========== HERO ========== */
+        .hero {
+            text-align: center;
+            padding: 56px 0 40px;
+        }
 
-    /* ---------- HORIZONTAL SCROLL / ALL ITEMS CLEARLY VISIBLE ---------- */
-    /* we keep grid — every item is on the front page, no pagination, no tabs */
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
 
-    /* ---------- FOOTNOTE / SIMPLE FOOTER ---------- */
-    .simple-footer {
-      margin-top: 4rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid #e2e2ea;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.85rem;
-      color: #6b6b7e;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
 
-    .footer-icons i {
-      margin-left: 1.2rem;
-      font-size: 1rem;
-      color: #9a9aad;
-      cursor: default;
-    }
+        /* ========== PRODUCT GRID ========== */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 24px;
+            padding-bottom: 64px;
+        }
 
-    /* ---------- RESPONSIVE ---------- */
-    @media (max-width: 600px) {
-      body { padding: 1.5rem 1rem; }
-      h1 { font-size: 1.8rem; }
-      .product-grid { gap: 1rem; grid-template-columns: repeat(2, 1fr); }
-      .product-visual { font-size: 2rem; }
-      .product-name { font-size: 0.95rem; }
-      .product-price { font-size: 0.9rem; }
-      .add-simple { font-size: 0.7rem; padding: 0.4rem 1rem; }
-      .simple-header { flex-direction: column; align-items: flex-start; }
-    }
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.25s ease;
+            box-shadow: var(--shadow-sm);
+        }
 
-    @media (max-width: 380px) {
-      .product-grid { grid-template-columns: 1fr; }
-    }
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: transparent;
+        }
 
-    /* hide any leftover complex stuff — everything is flat and clear */
-    .no-complexity {
-      display: none;
-    }
+        .product-visual-link { width: 100%; }
 
-    /* make sure all items are visible, no filters/hidden sections */
-    .all-items-visible {
-      display: block;
-    }
-  </style>
+        .product-visual {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e8e8ed 100%);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--primary-light);
+            margin-bottom: 16px;
+            transition: all 0.25s;
+        }
+
+        .product-card:hover .product-visual {
+            background: linear-gradient(135deg, #e8e8ed 0%, #dcdce4 100%);
+            color: var(--accent);
+        }
+
+        .product-name {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            letter-spacing: -0.01em;
+        }
+
+        .product-meta {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .product-meta i { color: #f5b342; font-size: 0.72rem; }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 14px;
+            letter-spacing: -0.02em;
+        }
+
+        .add-simple {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 22px;
+            border-radius: 50px;
+            border: 1.5px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font-size: 0.82rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .add-simple:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .add-simple i { font-size: 0.72rem; }
+
+        /* ========== EMPTY STATE ========== */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: #d1d5db;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .empty-state p { font-size: 1rem; margin-bottom: 20px; }
+
+        /* ========== PRODUCT DETAIL ========== */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin: 32px 0 24px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover { color: var(--accent); }
+
+        .product-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
+            align-items: start;
+            padding-bottom: 80px;
+        }
+
+        .product-detail-visual {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e8e8ed 100%);
+            border-radius: var(--radius);
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            color: var(--primary-light);
+        }
+
+        .product-detail-info {
+            padding-top: 20px;
+        }
+
+        .category-tag {
+            display: inline-block;
+            background: #f3f4f6;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 5px 12px;
+            border-radius: 50px;
+            margin-bottom: 14px;
+        }
+
+        .product-detail-info h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .rating i { color: #f5b342; font-size: 0.85rem; }
+
+        .detail-price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .stock {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+        }
+
+        .qty-label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .qty-label input {
+            width: 80px;
+            padding: 8px 12px;
+            margin-left: 10px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .qty-label input:focus { border-color: var(--accent); }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            border-radius: 50px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.92rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(233,69,96,0.3);
+        }
+
+        /* ========== CART PAGE ========== */
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 40px 0 28px;
+            letter-spacing: -0.02em;
+        }
+
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 28px;
+        }
+
+        .cart-table thead {
+            background: #f9fafb;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cart-table th {
+            text-align: left;
+            padding: 16px 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .cart-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.92rem;
+            vertical-align: middle;
+        }
+
+        .cart-table tr:last-child td { border-bottom: none; }
+
+        .cart-product {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .cart-icon {
+            width: 52px;
+            height: 52px;
+            background: #f3f4f6;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--primary-light);
+            flex-shrink: 0;
+        }
+
+        .cart-table input[type="number"] {
+            width: 64px;
+            padding: 8px 10px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 0.88rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .cart-table input[type="number"]:focus { border-color: var(--accent); }
+
+        .icon-btn-danger {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            padding: 8px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .icon-btn-danger:hover {
+            color: var(--accent);
+            background: rgba(233,69,96,0.08);
+        }
+
+        .cart-summary {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            max-width: 420px;
+            margin-left: auto;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            font-size: 0.92rem;
+            color: var(--text-muted);
+        }
+
+        .summary-row.total {
+            border-top: 1px solid var(--border);
+            margin-top: 8px;
+            padding-top: 20px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .cart-summary .btn-primary {
+            width: 100%;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* ========== FOOTER ========== */
+        .site-footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 0;
+            margin-top: auto;
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .footer-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-icons i {
+            font-size: 1rem;
+            color: var(--text-muted);
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        .footer-icons i:hover { color: var(--accent); }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 900px) {
+            .product-detail {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .product-detail-visual { font-size: 5rem; }
+            .product-detail-info h1 { font-size: 1.8rem; }
+            .hero h1 { font-size: 2rem; }
+        }
+
+        @media (max-width: 700px) {
+            .header-inner { height: auto; padding: 14px 0; flex-wrap: wrap; }
+            .search-bar { order: 3; max-width: 100%; width: 100%; }
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+            .product-card { padding: 14px; }
+            .product-visual { font-size: 2rem; }
+            .product-name { font-size: 0.9rem; }
+            .product-price { font-size: 1rem; }
+            .add-simple { padding: 8px 16px; font-size: 0.75rem; }
+            .container { padding: 0 16px; }
+            .cart-table th, .cart-table td { padding: 12px 10px; font-size: 0.82rem; }
+            .cart-icon { width: 40px; height: 40px; font-size: 1rem; }
+            .cart-summary { max-width: 100%; }
+        }
+
+        @media (max-width: 420px) {
+            .product-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-  <div class="shop-container">
-    <!-- SIMPLE HEADER — no mega menu, no search bar overload -->
-    <div class="simple-header">
-      <div class="brand">
-        <i class="fas fa-cube"></i>
-        <span>NexusShop</span>
-      </div>
-      <div class="simple-actions">
-        <i class="far fa-heart icon-btn"></i>
-        <i class="far fa-user icon-btn"></i>
-        <i class="fas fa-shopping-bag icon-btn"></i>
-      </div>
-    </div>
 
-    <!-- TITLE + SUBTITLE (minimal) -->
-    <h1>Everything in one place</h1>
-    <div class="subhead">All products · no clutter · straight to the point</div>
+    <!-- ========== HEADER ========== -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="brand">
+                <i class="fas fa-cube"></i>
+                <span>NexusShop</span>
+            </a>
 
-    <!-- ========== ALL ITEMS ON FRONT PAGE ========== -->
-    <div class="product-grid">
-      <!-- 1 -->
-      <div class="product-card">
-        <div class="product-visual"><i class="fas fa-headphones"></i></div>
-        <div class="product-name">Aura Buds</div>
-        <div class="product-meta"><i class="fas fa-star"></i> 4.8 · Audio</div>
-        <div class="product-price">$89</div>
-        <div class="add-simple"><i class="fas fa-plus"></i> Add</div>
-      </div>
-      <!-- 2 -->
-      <div class="product-card">
-        <div class="product-visual"><i class="fas fa-clock"></i></div>
-        <div class="product-name">Pulse Watch</div>
-        <div class="product-meta"><i class="fas fa-star"></i> 4.9 · Wearable</div>
-        <div class="product-price">$199</div>
-        <div class="add-simple"><i class="fas fa-plus"></i> Add</div>
-      </div>
-      <!-- 3 -->
-      <div class="product-card">
-        <div class="product-visual"><i class="fas fa-laptop"></i></div>
-        <div class="product-name">Zephyr Book</div>
-        <div class="product-meta"><i class="fas fa-star"></i> 4.7 · Laptop</div>
-        <div class="product-price">$1299</div>
-        <div class="add-simple"><i class="fas fa-plus"></i> Add</div>
-      </div>
-      <!-- 4 -->
-      <div class="product-card">
-        <div class="product-visual"><i class="fas fa-camera"></i></div>
-        <div class="product-name">Lumina Cam</div>
-        <div class="product-meta"><i class="fas fa-star"></i> 4.9 · Photo</div>
-        <div class="product-price">$449</div>
-        <div class="add-simple"><i class="fas fa-plus"></i> Add</div>
-      </div>
-      <!-- 5 -->
-      <div class="product-card">
-        <div class="product-visual"><i class="fas fa-mobile-alt"></i></div>
-        <div class="product-name">Nova Phone</div>
-        <div class="product-meta"><i class="fas fa-star"></i> 4.8 · Mobile</div>
-        <div class="product-price">$799</div>
-        <div class="add-simple"><i class="fas fa-plus"></i> Add</div>
-      </div>
-      <!-- 6 -->
-      <div class="product-card">
-        <div class="product-visual"><i class="fas fa-gamepad"></i></div>
-        <div class="product-name">Reactor Pad</div>
-        <div class="product-meta"><i class="fas fa-star"></i> 4.6 · Gaming</div>
-        <div class="product-price">$59</div>
-        <div class="add-simple"><i class="fas fa-plus"></i> Add</div>
-      </div>
-      <!-- 7 -->
-      <div class="product-card">
-        <div class="product-visual"><i class="fas fa-tv"></i></div>
-        <div class="product-name">Vision 4K</div>
-        <div class="product-meta"><i class="fas fa-star"></i> 4.7 · Display</div>
-        <div class="product-price">$699</div>
-        <div class="add-simple"><i class="fas fa-plus"></i> Add</div>
-      </div>
-      <!-- 8 -->
-      <div class="product-card">
-        <div class="product-visual"><i class="fas fa-keyboard"></i></div>
-        <div class="product-name">TypeMaster</div>
-        <div class="product-meta"><i class="fas fa-star"></i> 4.8 · Accessory</div>
-        <div class="product-price">$129</div>
-        <div class="add-simple"><i class="fas fa-plus"></i> Add</div>
-      </div>
-      <!-- 9 -->
-      <div class="product-card">
-        <div class="product-visual"><i class="fas fa-mouse"></i></div>
-        <div class="product-name">Glide Mouse</div>
-        <div class="product-meta"><i class="fas fa-star"></i> 4.7 · Accessory</div>
-        <div class="product-price">$39</div>
-        <div class="add-simple"><i class="fas fa-plus"></i> Add</div>
-      </div>
-      <!-- 10 -->
-      <div class="product-card">
-        <div class="product-visual"><i class="fas fa-battery-full"></i></div>
-        <div class="product-name">Volt Core</div>
-        <div class="product-meta"><i class="fas fa-star"></i> 4.9 · Power</div>
-        <div class="product-price">$79</div>
-        <div class="add-simple"><i class="fas fa-plus"></i> Add</div>
-      </div>
-      <!-- 11 -->
-      <div class="product-card">
-        <div class="product-visual"><i class="fas fa-wifi"></i></div>
-        <div class="product-name">Mesh Router</div>
-        <div class="product-meta"><i class="fas fa-star"></i> 4.6 · Network</div>
-        <div class="product-price">$159</div>
-        <div class="add-simple"><i class="fas fa-plus"></i> Add</div>
-      </div>
-      <!-- 12 -->
-      <div class="product-card">
-        <div class="product-visual"><i class="fas fa-print"></i></div>
-        <div class="product-name">InkFlow</div>
-        <div class="product-meta"><i class="fas fa-star"></i> 4.5 · Office</div>
-        <div class="product-price">$249</div>
-        <div class="add-simple"><i class="fas fa-plus"></i> Add</div>
-      </div>
-      <!-- 13 -->
-      <div class="product-card">
-        <div class="product-visual"><i class="fas fa-microchip"></i></div>
-        <div class="product-name">Core i9</div>
-        <div class="product-meta"><i class="fas fa-star"></i> 4.9 · Component</div>
-        <div class="product-price">$599</div>
-        <div class="add-simple"><i class="fas fa-plus"></i> Add</div>
-      </div>
-      <!-- 14 -->
-      <div class="product-card">
-        <div class="product-visual"><i class="fas fa-hdd"></i></div>
-        <div class="product-name">Vault SSD</div>
-        <div class="product-meta"><i class="fas fa-star"></i> 4.8 · Storage</div>
-        <div class="product-price">$189</div>
-        <div class="add-simple"><i class="fas fa-plus"></i> Add</div>
-      </div>
-      <!-- 15 -->
-      <div class="product-card">
-        <div class="product-visual"><i class="fas fa-chair"></i></div>
-        <div class="product-name">Ergo Throne</div>
-        <div class="product-meta"><i class="fas fa-star"></i> 4.7 · Furniture</div>
-        <div class="product-price">$299</div>
-        <div class="add-simple"><i class="fas fa-plus"></i> Add</div>
-      </div>
-      <!-- 16 -->
-      <div class="product-card">
-        <div class="product-visual"><i class="fas fa-lightbulb"></i></div>
-        <div class="product-name">Glow Smart</div>
-        <div class="product-meta"><i class="fas fa-star"></i> 4.6 · Smart Home</div>
-        <div class="product-price">$49</div>
-        <div class="add-simple"><i class="fas fa-plus"></i> Add</div>
-      </div>
-    </div>
-    <!-- end product grid — every single item is visible on the front page -->
+            <form class="search-bar" onsubmit="event.preventDefault(); filterProducts(this.q.value);">
+                <i class="fas fa-search"></i>
+                <input type="text" name="q" placeholder="Search products…" />
+            </form>
 
-    <!-- simple, quiet footer -->
-    <div class="simple-footer">
-      <span>© NexusShop — all items on one page</span>
-      <div class="footer-icons">
-        <i class="fab fa-instagram"></i>
-        <i class="fab fa-x-twitter"></i>
-        <i class="fab fa-github"></i>
-      </div>
-    </div>
-  </div>
+            <nav class="header-actions">
+                <a href="cart.html" class="icon-link cart-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-badge">0</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ========== MAIN ========== -->
+    <main class="container">
+        <div class="hero">
+            <h1>Everything in one place</h1>
+            <p>All products · no clutter · straight to the point</p>
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+
+        <div class="empty-state" id="emptyState" style="display:none;">
+            <i class="fas fa-box-open"></i>
+            <p>No products found. Try a different search.</p>
+        </div>
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <span>© NexusShop — Java Home myweb 8.8.6</span>
+            <div class="footer-icons">
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-x-twitter"></i>
+                <i class="fab fa-github"></i>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script src="js/products.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        function renderProducts(list) {
+            const grid = document.getElementById("productGrid");
+            const empty = document.getElementById("emptyState");
+            grid.innerHTML = "";
+            if (!list.length) { empty.style.display = "block"; return; }
+            empty.style.display = "none";
+            list.forEach(p => {
+                const card = document.createElement("div");
+                card.className = "product-card";
+                card.innerHTML = `
+                    <a href="product.html?id=${p.id}" class="product-visual-link">
+                        <div class="product-visual"><i class="fas ${p.icon}"></i></div>
+                    </a>
+                    <div class="product-name">${p.name}</div>
+                    <div class="product-meta"><i class="fas fa-star"></i> ${p.rating} · ${p.category}</div>
+                    <div class="product-price">$${p.price}</div>
+                    <button class="add-simple" onclick="addToCart(${p.id},1)">
+                        <i class="fas fa-plus"></i> Add to Cart
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterProducts(q) {
+            if (!q) return renderProducts(PRODUCTS);
+            const k = q.toLowerCase();
+            renderProducts(PRODUCTS.filter(p =>
+                p.name.toLowerCase().includes(k) || p.category.toLowerCase().includes(k)
+            ));
+        }
+
+        document.addEventListener("DOMContentLoaded", () => renderProducts(PRODUCTS));
+    </script>
 </body>
 </html>
